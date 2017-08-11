@@ -83,7 +83,7 @@ function updateStatus(ip, port, apikey, index) {
 }
 
 function basicInfo(ip, port, apikey, index) {
-  client[index].get("/api/printerprofiles")
+  client[index].get("api/printerprofiles")
   .done(function (response) {
       // get name of the printer
     document.getElementById("printerName" +index).innerHTML =response.profiles._default.name;
@@ -94,7 +94,7 @@ function basicInfo(ip, port, apikey, index) {
 
 function jobInfo(ip, port, apikey, index) {
   // get info on current print job
-  client[index].get("/api/job")
+  client[index].get("api/job")
   .done(function (response) {
        //get filename of print
       if (response.job.file.name === null) {
@@ -121,7 +121,7 @@ function jobInfo(ip, port, apikey, index) {
 
 function tempInfo(ip, port, apikey, index) {
   // get info on temps
-  client[index].get("/api/printer")
+  client[index].get("api/printer")
   .done(function (response) {
       // get temp of extruder 0 and its target temp
       document.getElementById("e0Temp" +index).innerHTML = "Extruder: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
@@ -298,7 +298,7 @@ function testConnection(ip, port, apikey, index) {
     var testClient = new OctoPrintClient();
     testClient.options.baseurl = "https://" + ip + ":" + port;
     testClient.options.apikey = apikey;
-    testClient.get("/api/connection")
+    testClient.get("api/connection")
    .done(function (response) {
        if (response.current.state !== null) {
             eePrinter(ip, port, apikey, index);
