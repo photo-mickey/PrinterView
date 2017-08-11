@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 
 <html lang="en">
     <head>
@@ -19,12 +19,14 @@
         <script src="https://github.com/makeusabrew/bootbox/releases/download/v4.4.0/bootbox.min.js"></script>
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap2-toggle.min.css" rel="stylesheet">
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap2-toggle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js") }}"></script>
+        <script src="octo_packed_client.js"></script>
     </head>
 
     <body>
       <div class="page-header">
           <h1>PrinterView</h1>
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPrinterModal" id="addPrinterBtn">
+          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" onclick="eePrinterModal(null)" id="eePrinterBtn">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
           </button>
           <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removePrintersModal" id="removePrintersBtn">
@@ -36,36 +38,35 @@
   	      <div class="row" id="printerGrid"></div>
       </div>
 
-  		<div class="modal fade" id="addPrinterModal" tabindex="-1" role="dialog" aria-labelledby="addPrinterModal" aria-hidden="true">
-  		  <div class="modal-dialog">
-  			<div class="modal-content">
-  			  <div class="modal-header">
-  				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  				<h4 class="modal-title" id="addPrinterModalLabel">Add a new Printer</h4>
-  			  </div>
-  			  <div class="modal-body">
-  				<div class="input-group">
-  				  <span class="input-group-addon" id="basic-addon1">IP Address</span>
-  				  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="newIP">
-  				</div>
+  		<div class="modal fade" id="eePrinterModal" tabindex="-1" role="dialog" aria-labelledby="eePrinterModal" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="editPrinterModalLabel">Printer Info</h4>
+          </div>
+          <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">IP Address</span>
+            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eeIP">
+          </div>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Port</span>
-            <input type="text" class="form-control" placeholder="" value="80" aria-describedby="basic-addon1" id="newPort">
+            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eePort">
           </div>
-  				</br>
-  				<div class="input-group">
-  				  <span class="input-group-addon" id="basic-addon1">API key</span>
-  				  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="newApikey">
-  				</div>
-  			  </div>
-  			  <div class="modal-footer">
-  				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addFromModal()">Add</button>
-  			  </div>
-  			</div>
-  		  </div>
-  		</div>
-
+          </br>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">API key</span>
+            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eeApikey">
+          </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eeFromModal()">Save</button>
+          </div>
+        </div>
+        </div>
+      </div>
 
     	<div class="modal fade" id="removePrintersModal" tabindex="-1" role="dialog" aria-labelledby="removePrintersModal" aria-hidden="true">
     	  <div class="modal-dialog">
