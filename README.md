@@ -5,7 +5,7 @@ Added from original repo:
 - Editing printers
 - Hopefully better flow
 - OctoPrint Javascript Client Library
-- Refresh isn't crazy anymore. Certainly no infinate loops.
+- Refresh isn't crazy anymore. Certainly no infinite loops.
 - Miscellaneous improvements...
 
 # Installation
