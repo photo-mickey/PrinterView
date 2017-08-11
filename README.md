@@ -1,5 +1,12 @@
 # PrinterView
-a simple web app for viewing the status of multiple printers in a single page
+A simple web app for viewing the status of multiple printers in a single page.
+
+Added from original reo:
+- Editing printers
+- Hopefully better flow
+- OctoPrint Javascript Client Library
+- Refresh isn't crazy anymore. Certainly no infinate loops.
+- Miscellaneous improvements...
 
 # Installation
 
