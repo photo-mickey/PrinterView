@@ -14,8 +14,6 @@ Go to [bachone.github.io/PrinterView](http://bachone.github.io/PrinterView/)
 
 Should work on mobile as well. Not much from the original design had changed, so [this](https://github.com/quillford/PrinterView/wiki) will still work for now. 
 
-HTTPS is "Required for your site because you are using the default domain (bachone.github.io)". You might need to enable unsafe scripts for now. 
-
 # Acknowledgements
 PrinterView uses the following:
 * [quillford](https://github.com/quillford)
