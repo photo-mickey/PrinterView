@@ -3,7 +3,7 @@ a simple web app for viewing the status of multiple printers in a single page
 
 # Installation
 
-Go to [bachone.github.io/PrinterView](http://quillford.github.io/PrinterView/)
+Go to [bachone.github.io/PrinterView](http://bachone.github.io/PrinterView/)
 
 [Desktop](https://github.com/quillford/PrinterView/wiki/Desktop-Setup)
 
