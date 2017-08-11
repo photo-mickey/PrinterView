@@ -43,7 +43,7 @@ function reloadPrinters() {
       numPrinters = printers.ip.length;
       for (var i = 0; i < numPrinters; i++) {
           client.push(new OctoPrintClient());
-          client[i].options.baseurl = "http://" +printers.ip[i] + ":" +printers.port[i];
+          client[i].options.baseurl = "https://" +printers.ip[i] + ":" +printers.port[i];
           client[i].options.apikey = printers.apikey[i];
           initialInfo(printers.ip[i], printers.port[i], printers.apikey[i], i);
           addPrinter(printers.ip[i], printers.port[i], printers.apikey[i], i);
@@ -173,7 +173,7 @@ function eePrinter(ip, port, apikey, i, noConn) {
 function addPrinter(ip, port, apikey, printerNum) {
   var editButton = '<li><button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="eePrinterModal(' + printerNum +')">Edit Printer <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></li>';
   var removeButton = '<li><button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter(' + printerNum +')">Remove Printer <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></li>';
-  var octoPrintPageButton = '<li><a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://' +printers.ip[printerNum] +'/" target="_blank">OctoPrint <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
+  var octoPrintPageButton = '<li><a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="https://' +printers.ip[printerNum] +'/" target="_blank">OctoPrint <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
 
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer' + printerNum +'"></div>');
