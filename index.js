@@ -159,7 +159,7 @@ function eePrinter(ip, port, apikey, i, noConn) {
     printers.ip[i] = ip;
     printers.port[i] = port;
     printers.apikey[i] = apikey;
-    client[i].options.baseurl = "http://" + ip + ":" + port;
+    client[i].options.baseurl = "https://" + ip + ":" + port;
     client[i].options.apikey = apikey;
 
     // save new printer to local storage
@@ -296,7 +296,7 @@ function makeBlank(index) {
 
 function testConnection(ip, port, apikey, index) {
     var testClient = new OctoPrintClient();
-    testClient.options.baseurl = "http://" + ip + ":" + port;
+    testClient.options.baseurl = "https://" + ip + ":" + port;
     testClient.options.apikey = apikey;
     testClient.get("/api/connection")
    .done(function (response) {
