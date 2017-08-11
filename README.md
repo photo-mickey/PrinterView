@@ -10,6 +10,8 @@ Added from original repo:
 
 # Installation
 
+Place on webserver of your choice. You can try to use my GitHub Pages version. HTTPS is enforced with no option to turn it off so it is very hard to actually connect to OctoPrint instances from it unless you have them set up to use HTTPS.
+
 Go to [bachone.github.io/PrinterView](http://bachone.github.io/PrinterView/)
 
 Should work on mobile as well. Not much from the original design had changed, so [this](https://github.com/quillford/PrinterView/wiki) will still work for now. 
