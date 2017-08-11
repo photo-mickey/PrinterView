@@ -12,14 +12,12 @@ Added from original repo:
 
 Go to [bachone.github.io/PrinterView](http://bachone.github.io/PrinterView/)
 
-[Desktop](https://github.com/quillford/PrinterView/wiki/Desktop-Setup)
-
-[iOS](https://github.com/quillford/PrinterView/wiki/iOS-Setup)
-
-[Android](https://github.com/quillford/PrinterView/wiki/Android-Setup)
+Should work on mobile as well. Not much from the original design had changed, so [this](https://github.com/quillford/PrinterView/wiki) will still work for now. 
 
 # Acknowledgements
 PrinterView uses the following:
+* [quillford](https://github.com/quillford)
+* [Foosel/OctoPrint](https://github.com/foosel/OctoPrint)
 * [jQuery](https://jquery.com/)
 * [Bootstrap](http://getbootstrap.com/)
 * [Bootbox](http://bootboxjs.com/)
