@@ -1,18 +1,25 @@
 # PrinterView
-a simple web app for viewing the status of multiple printers in a single page
+A simple web app for viewing the status of multiple printers in a single page.
+
+Added from original repo:
+- Editing printers
+- Hopefully better flow
+- OctoPrint Javascript Client Library
+- Refresh isn't crazy anymore. Certainly no infinite loops.
+- Miscellaneous improvements...
 
 # Installation
 
-Go to [quillford.github.io/PrinterView](http://quillford.github.io/PrinterView/)
+Go to [bachone.github.io/PrinterView](http://bachone.github.io/PrinterView/)
 
-[Desktop](https://github.com/quillford/PrinterView/wiki/Desktop-Setup)
+Should work on mobile as well. Not much from the original design had changed, so [this](https://github.com/quillford/PrinterView/wiki) will still work for now. 
 
-[iOS](https://github.com/quillford/PrinterView/wiki/iOS-Setup)
-
-[Android](https://github.com/quillford/PrinterView/wiki/Android-Setup)
+HTTPS is "Required for your site because you are using the default domain (bachone.github.io)". You will need to enable unsafe scripts for now. 
 
 # Acknowledgements
 PrinterView uses the following:
+* [quillford](https://github.com/quillford)
+* [Foosel/OctoPrint](https://github.com/foosel/OctoPrint)
 * [jQuery](https://jquery.com/)
 * [Bootstrap](http://getbootstrap.com/)
 * [Bootbox](http://bootboxjs.com/)
