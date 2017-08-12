@@ -171,9 +171,9 @@ function eePrinter(ip, port, apikey, i, noConn) {
 
 
 function addPrinter(ip, port, apikey, printerNum) {
-  var editButton = '<li><button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="eePrinterModal(' + printerNum +')">Edit Printer <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></li>';
-  var removeButton = '<li><button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter(' + printerNum +')">Remove Printer <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></li>';
-  var octoPrintPageButton = '<li><a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://' +printers.ip[printerNum] +'/" target="_blank">OctoPrint <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
+  var editButton = '<li><button type="button" style="width: 100%" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="eePrinterModal(' + printerNum +')">Edit Printer <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></li>';
+  var removeButton = '<li><button type="button" style="width: 100%" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter(' + printerNum +')">Remove Printer <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></li>';
+  var octoPrintPageButton = '<li><a type="button" style="width: 100%" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://' +printers.ip[printerNum] +'/" target="_blank">OctoPrint <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
 
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer' + printerNum +'"></div>');
