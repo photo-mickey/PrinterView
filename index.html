@@ -1,106 +1,109 @@
 ﻿<!doctype html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <link rel="apple-touch-icon" href="/images/custom_icon.png">
-        <link rel="icon" sizes="192x192" href="/images/custom_icon.png">
-        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <title>PrinterView</title>
-        <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="https://github.com/makeusabrew/bootbox/releases/download/v4.4.0/bootbox.min.js"></script>
-        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap2-toggle.min.css" rel="stylesheet">
-        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap2-toggle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js") }}"></script>
-        <script src="octo_packed_client.js"></script>
-    </head>
+	<head>
+        	<meta charset="utf-8">
+        	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        	<meta name="apple-mobile-web-app-capable" content="yes">
+       	 	<meta name="mobile-web-app-capable" content="yes">
+        	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+        	<link rel="apple-touch-icon" href="/images/custom_icon.png">
+        	<link rel="icon" sizes="192x192" href="/images/custom_icon.png">
+        	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        	<link rel="stylesheet" type="text/css" href="style.css">
+        	<title>CornBotFarm</title>
+        	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+        	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        	<script src="https://github.com/makeusabrew/bootbox/releases/download/v4.4.0/bootbox.min.js"></script>
+        	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap2-toggle.min.css" rel="stylesheet">
+        	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap2-toggle.min.js"></script>
+        	<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js") }}"></script>
+        	<script src="octo_packed_client.js"></script>
+    	</head>
 
-    <body>
-      <div class="page-header">
-          <h1>PrinterView</h1>
-          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" onclick="eePrinterModal(null)" id="eePrinterBtn">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          </button>
-          <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removePrintersModal" id="removePrintersBtn">
-              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-          </button>
-      </div>
+    	<body>
+		<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+    		<div class="page-header">
+        		<h1>3D FARM</h1>
+        		<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" onclick="eePrinterModal(null)" id="eePrinterBtn">
+              			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          		</button>
+         		<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removePrintersModal" id="removePrintersBtn">
+              			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          		</button>
+      		</div>
+		
+      		<div id="printerPanels">
+  	      		<div class="row" id="printerGrid"></div>
+      		</div>
 
-      <div id="printerPanels">
-  	      <div class="row" id="printerGrid"></div>
-      </div>
+		<div class="modal fade" id="eePrinterModal" tabindex="-1" role="dialog" aria-labelledby="eePrinterModal" aria-hidden="true">
+       			<div class="modal-dialog">
+        			<div class="modal-content">
+        				<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+          					<h4 class="modal-title" id="editPrinterModalLabel">Printer info</h4>
+        				</div>
+        				<div class="modal-body">
+        					<div class="input-group">
+        						<span class="input-group-addon" id="basic-addon1">IP Address</span>
+            						<input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eeIP">
+        					</div>
+        					<div class="input-group">
+        						<span class="input-group-addon" id="basic-addon1">Port</span>
+            						<input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eePort">
+        					</div>
+        					</br>
+        					<div class="input-group">
+        						<span class="input-group-addon" id="basic-addon1">API key</span>
+            						<input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eeApikey">
+        					</div>
+					</div>
+        				<div class="modal-footer">
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eeFromModal()">Save</button>
+        				</div>
+        			</div>
+        		</div>
+      		</div>
 
-  		<div class="modal fade" id="eePrinterModal" tabindex="-1" role="dialog" aria-labelledby="eePrinterModal" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="editPrinterModalLabel">Printer Info</h4>
-          </div>
-          <div class="modal-body">
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">IP Address</span>
-            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eeIP">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Port</span>
-            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eePort">
-          </div>
-          </br>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">API key</span>
-            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="eeApikey">
-          </div>
-          </div>
-          <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eeFromModal()">Save</button>
-          </div>
-        </div>
-        </div>
-      </div>
-
-    	<div class="modal fade" id="removePrintersModal" tabindex="-1" role="dialog" aria-labelledby="removePrintersModal" aria-hidden="true">
-    	  <div class="modal-dialog">
-    		<div class="modal-content">
-    		  <div class="modal-header">
-    			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    			<h4 class="modal-title" id="removePrintersModal">Remove all Printers</h4>
-    		  </div>
-    		  <div class="modal-body">
-    		        <p>Are you sure you want to remove all your saved printers?</p>
-    		  </div>
-    		  <div class="modal-footer">
-    			      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    			      <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deletePrinters()">Remove</button>
-    		  </div>
+    		<div class="modal fade" id="removePrintersModal" tabindex="-1" role="dialog" aria-labelledby="removePrintersModal" aria-hidden="true">
+    	  		<div class="modal-dialog">
+    				<div class="modal-content">
+    		  			<div class="modal-header">
+    						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    						<h4 class="modal-title" id="removePrintersModal">Remove all Printers</h4>
+    		  			</div>
+    		  			<div class="modal-body">
+    		        			<p>Are you sure you want to remove all your saved printers?</p>
+    		  			</div>
+    		  			<div class="modal-footer">
+    			      			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    			      			<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deletePrinters()">Remove</button>
+    		  			</div>
+    				</div>
+    	  		</div>
     		</div>
-    	  </div>
-    	</div>
 
   		<div class="modal fade" id="missingInfoModal" tabindex="-1" role="dialog" aria-labelledby="missingInfoModalLabel" aria-hidden="true">
-  		  <div class="modal-dialog">
-  			<div class="modal-content">
-  			  <div class="modal-header">
-  				      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  				      <h4 class="modal-title" id="missingInfoModalLabel">Missing Info</h4>
-  			  </div>
-  			  <div class="modal-body">
-  				      Could not add printer because some information is missing.
-  			  </div>
-  			  <div class="modal-footer">
-  				      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  			  </div>
+  			<div class="modal-dialog">
+  				<div class="modal-content">
+  			 		<div class="modal-header">
+  						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  				      		<h4 class="modal-title" id="missingInfoModalLabel">Missing Info</h4>
+  			  		</div>
+  			  		<div class="modal-body">
+  						Could not add printer because some information is missing.
+  			  		</div>
+  			  		<div class="modal-footer">
+  						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  			  		</div>
+  				</div>
   			</div>
-  		  </div>
   		</div>
 
   		<div class="modal fade" id="noPrintersModal" tabindex="-1" role="dialog" aria-labelledby="noPrintersModalLabel" aria-hidden="true">
@@ -113,14 +116,14 @@
   					<div class="modal-body">
   						PrinterView allows you to view the status of multiple printers that use <a target="_blank" href="https://github.com/foosel/OctoPrint">OctoPrint</a> (or just one) in a single view. PrinterView also works well on mobile, so you can <a target="_blank" href="https://github.com/quillford/PrinterView/wiki/iOS-Setup">add it</a> to your phone or tablet.
   						Click the '+' button to start adding printers. You must have <b>CORS enabled</b> in your API settings in OctoPrint.
-  					  </br>
+  						</br>
   						<h4>Instructions</h4>
   						<dl type="1">
-  						  <dt>Open OctoPrint</dt>
-  						  <dt>Go to settings</dt>
-  						  <dt>Go to the API tab</dt>
-  						  <dt>"Enable" should have a checkmark</dt>
-  						  <dt>"Allow CORS" should also be checked</dt>
+  						<dt>Open OctoPrint</dt>
+  						<dt>Go to settings</dt>
+  						<dt>Go to the API tab</dt>
+  						<dt>"Enable" should have a checkmark</dt>
+  						<dt>"Allow CORS" should also be checked</dt>
   						</dl>
   					</div>
   					<div class="modal-footer">
@@ -131,12 +134,12 @@
   		</div>
 
   		<footer>
-        <p>
-          <a href="https://github.com/quillford/PrinterView"><span class="glyphicon glyphicon-file" aria-hidden="true" style="color: black;">Source</span></a>
-          <a href="https://github.com/quillford/PrinterView/wiki"><span class="glyphicon glyphicon-book" aria-hidden="true" style="color: black;">Wiki</span></a>
-        </p>
+        		<p>
+          			<a href="https://github.com/photo-mickey/PrinterView"><span class="glyphicon glyphicon-file" aria-hidden="true" style="color: black;">Source</span></a>
+          			<a href="https://github.com/photo-mickey/PrinterView/wiki"><span class="glyphicon glyphicon-book" aria-hidden="true" style="color: black;">Wiki</span></a>
+        		</p>
   		</footer>
-    </body>
+	</body>
 
-    <script type="text/javascript" src="index.js"></script>
+    	<script type="text/javascript" src="index.js"></script>
 </html>
