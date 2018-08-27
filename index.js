@@ -1,10 +1,46 @@
+//********************************************************************************
+const printerState = {
+	ready 	: 1,
+	working	: 2,
+	error	: 3
+}
+const plastic = {
+	ABS	: 1,
+	PLA	: 2,
+	Watson	: 3,
+	HIPS	: 4,
+}
+const color = {
+	white		: 0x01,
+	black		: 0x02,
+	lightGray	: 0x03,
+	Gray		: 0x04,
+	red		: 0x05,
+	green		: 0x06,
+	blue		: 0x07, 
+	yellow		: 0x08,
+	orange		: 0x09,
+	brown		: 0x0A,
+	purple		: 0x0B,
+	emerald		: 0x0C,
+	skiey		: 0x0D,
+	coral		: 0x0E,
+	rose		: 0x0F,
+	chocolate	: 0x10,
+	gold		: 0x11,
+	krem		: 0x12,
+	limeGreen	: 0x13,
+	lightBlue	: 0x14,
+	natural		: 0x15,
+}
+//********************************************************************************
 var refreshRate = 5000; // in milliseconds
 var numPrinters = 0;
-var modalIndex = 0;
-var printers = new Object();
-var connected = true;
-var client = new Array();
-
+var modalIndex  = 0;
+var printers    = new Object();
+var connected   = true;
+var client      = new Array();
+//********************************************************************************
 
 // ToDo:
 // switch to sockJS 
@@ -34,7 +70,7 @@ function reloadPrinters() {
           		"ip": [],
           		"port": [],
           		"apikey": [],
-          		"noConn": [] 
+          		"noConn": []
   		};
       	$("#noPrintersModal").modal("show");
   	} else {
