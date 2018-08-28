@@ -135,7 +135,7 @@ function basicInfo(ip, port, apikey, index) {
     		document.getElementById("printerIP" +index).innerHTML = ip;
                 // get number of tools
                 //printersSetings.tool[index] = response.profiles.extruder.count;
-                document.getElementById("e1Temp" +index).innerHTML = response.extruder;
+                document.getElementById("e1Temp" +index).innerHTML = response.profiles._default.name.extruder.count;
                 //bootbox.confirm
   	});
 }
