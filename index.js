@@ -3,13 +3,13 @@ const printerState = {
 	ready 	: 1,
 	working	: 2,
 	error	: 3
-}
+};
 const plastic = {
 	ABS	: 1,
 	PLA	: 2,
 	Watson	: 3,
-	HIPS	: 4,
-}
+	HIPS	: 4
+};
 const color = {
 	white		: 0x01,
 	black		: 0x02,
@@ -31,15 +31,19 @@ const color = {
 	krem		: 0x12,
 	limeGreen	: 0x13,
 	lightBlue	: 0x14,
-	natural		: 0x15,
-}
+	natural		: 0x15
+};
 //********************************************************************************
-var refreshRate = 5000; // in milliseconds
-var numPrinters = 0;
-var modalIndex  = 0;
-var printers    = new Object();
-var connected   = true;
-var client      = new Array();
+var refreshRate     = 5000; // in milliseconds
+var numPrinters     = 0;
+var modalIndex      = 0;
+var printers        = new Object();
+var connected       = true;
+var client          = new Array();
+//********************************************************************************
+var printersSetings = {
+    tool: []
+}; 
 //********************************************************************************
 
 // ToDo:
@@ -64,14 +68,19 @@ window.onload = function () {
   	setInterval(function () {updatePrinters();}, refreshRate);
 };
 
+function initPrinters()
+{
+    printers ={
+        "ip": [],
+        "port": [],
+        "apikey": [],
+        "noConn": []
+    };
+}
+
 function reloadPrinters() {
 	if (localStorage.getItem("savedPrinters") === null) {
-      		printers ={
-          		"ip": [],
-          		"port": [],
-          		"apikey": [],
-          		"noConn": []
-  		};
+        initPrinters();
       	$("#noPrintersModal").modal("show");
   	} else {
       		delete client;
@@ -123,7 +132,9 @@ function basicInfo(ip, port, apikey, index) {
       		// get name of the printer
     		document.getElementById("printerName" +index).innerHTML =response.profiles._default.name;
       		// set the panel footer as the printer's ip
-    		document.getElementById("printerIP" +index).innerHTML = ip
+    		document.getElementById("printerIP" +index).innerHTML = ip;
+                // get number of tools
+                printersSetings.tool[index] = response.profiles._default.extruder.count;
   	});
 }
 
@@ -159,7 +170,13 @@ function tempInfo(ip, port, apikey, index) {
   	client[index].get("/api/printer")
   	.done(function (response) {
       		// get temp of extruder 0 and its target temp
-      		document.getElementById("e0Temp" +index).innerHTML = "Extruder: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
+      		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
+                // get temp of extruder 1 and its target temp
+                if (typeof response.temperature.tool1 !== "undefined" && response.temperature.tool1.actual !== null) {
+                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " +response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°";
+                } else {
+                    document.getElementById("e1Temp" +index).innerHTML ="Extruder 1: no tool";
+                }
       		// get temp of the bed and its target temp
       		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
         		document.getElementById("bedTemp" +index).innerHTML = "Bed: " +response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°";
@@ -220,6 +237,7 @@ function addPrinter(ip, port, apikey, printerNum) {
   	$("#panel" +printerNum).append('<div class="panel-body" id="body' + printerNum +'"></div>');
 	$("#body" +printerNum).append('<p id="printerStatus' + printerNum +'">status</p>');
  	$("#body" +printerNum).append('<p id="e0Temp' + printerNum +'">0</p>');
+        $("#body" +printerNum).append('<p id="e1Temp' + printerNum +'">0</p>');
   	$("#body" +printerNum).append('<p id="bedTemp' + printerNum +'">0</p>');
   	$("#body" +printerNum).append('<p id="currentFile' + printerNum +'">No active print</p>');
   	$("#body" +printerNum).append('<p id="timeLeft' + printerNum +'">Print Time Left</p>');
@@ -231,7 +249,7 @@ function addPrinter(ip, port, apikey, printerNum) {
 function eePrinterModal(index) {
 	if (index === null) {
     		// Use blank/default values for new printer
-    		index = numPrinters
+    		index = numPrinters;
     		$("#eeIP").val("");
     		$("#eePort").val("80");
     		$("#eeApikey").val("");
@@ -240,21 +258,21 @@ function eePrinterModal(index) {
       		// Keep the current printer values
   	} else {
       		// Pull in existing printer values
-    		printers = JSON.parse(localStorage.getItem("savedPrinters"))
-    		$("#eeIP").val(printers.ip[index])
-    		$("#eePort").val(printers.port[index])
-    		$("#eeApikey").val(printers.apikey[index])
+    		printers = JSON.parse(localStorage.getItem("savedPrinters"));
+    		$("#eeIP").val(printers.ip[index]);
+    		$("#eePort").val(printers.port[index]);
+    		$("#eeApikey").val(printers.apikey[index]);
   	}
-  	modalIndex = index
-  	$("#eePrinterModal").modal("show")
+  	modalIndex = index;
+  	$("#eePrinterModal").modal("show");
 }
 
 function eeFromModal() {
-  	var index = modalIndex
+  	var index = modalIndex;
   	var eeIP = $("#eeIP").val();
   	var eePort = $("#eePort").val();
   	var eeApikey = $("#eeApikey").val();
-  	if (eeIP === "" || eeApikey === "" || eePort == "") {
+  	if (eeIP === "" || eeApikey === "" || eePort === "") {
     		$("#missingInfoModal").modal("show");
   	} else {
    		testConnection(eeIP, eePort, eeApikey, index);
@@ -265,11 +283,7 @@ function deletePrinters() {
 	// remove the printers from localStorage
     	localStorage.removeItem("savedPrinters");
     	// remove the printers from the printers object
-    	printers ={
-        	"ip": [],
-        	"port": [],
-        	"apikey": []
-    	};
+    	initPrinters();
     	// reset the number of printers
     	delete client;
 	numPrinters = 0;
