@@ -164,7 +164,7 @@ function tempInfo(ip, port, apikey, index) {
   	client[index].get("/api/printer")
   	.done(function (response) {
       		// get temp of extruder 0 and its target temp
-      		document.getElementById("e0Temp" +index).innerHTML = "Extruder: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
+      		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
       		// get temp of the bed and its target temp
       		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
         		document.getElementById("bedTemp" +index).innerHTML = "Bed: " +response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°";
@@ -225,6 +225,7 @@ function addPrinter(ip, port, apikey, printerNum) {
   	$("#panel" +printerNum).append('<div class="panel-body" id="body' + printerNum +'"></div>');
 	$("#body" +printerNum).append('<p id="printerStatus' + printerNum +'">status</p>');
  	$("#body" +printerNum).append('<p id="e0Temp' + printerNum +'">0</p>');
+        $("#body" +printerNum).append('<p id="e1Temp' + printerNum +'">0</p>');
   	$("#body" +printerNum).append('<p id="bedTemp' + printerNum +'">0</p>');
   	$("#body" +printerNum).append('<p id="currentFile' + printerNum +'">No active print</p>');
   	$("#body" +printerNum).append('<p id="timeLeft' + printerNum +'">Print Time Left</p>');
