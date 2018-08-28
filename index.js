@@ -134,9 +134,7 @@ function basicInfo(ip, port, apikey, index) {
       		// set the panel footer as the printer's ip
     		document.getElementById("printerIP" +index).innerHTML = ip;
                 // get number of tools
-                //printersSetings.tool[index] = response.profiles.extruder.count;
-                document.getElementById("e1Temp" +index).innerHTML = response.profiles._default.extruder.count;
-                //bootbox.confirm
+                printersSetings.tool[index] = response.profiles._default.extruder.count;
   	});
 }
 
@@ -174,7 +172,11 @@ function tempInfo(ip, port, apikey, index) {
       		// get temp of extruder 0 and its target temp
       		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
                 // get temp of extruder 1 and its target temp
-                
+                if (printersSetings.tool[index] == 1){
+                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " +response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°";
+                } else {
+                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: No tool"
+                }
       		// get temp of the bed and its target temp
       		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
         		document.getElementById("bedTemp" +index).innerHTML = "Bed: " +response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°";
