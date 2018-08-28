@@ -175,7 +175,7 @@ function tempInfo(ip, port, apikey, index) {
                 if (typeof response.temperature.tool1 !== "undefined" && response.temperature.tool1.actual !== null) {
                     document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " +response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°";
                 } else {
-                    document.getElementById("e1Temp" +index).innerHTML ="0°";
+                    document.getElementById("e1Temp" +index).innerHTML ="Extruder 1: no tool";
                 }
       		// get temp of the bed and its target temp
       		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
