@@ -3,13 +3,13 @@ const printerState = {
 	ready 	: 1,
 	working	: 2,
 	error	: 3
-}
+};
 const plastic = {
 	ABS	: 1,
 	PLA	: 2,
 	Watson	: 3,
-	HIPS	: 4,
-}
+	HIPS	: 4
+};
 const color = {
 	white		: 0x01,
 	black		: 0x02,
@@ -31,8 +31,8 @@ const color = {
 	krem		: 0x12,
 	limeGreen	: 0x13,
 	lightBlue	: 0x14,
-	natural		: 0x15,
-}
+	natural		: 0x15
+};
 //********************************************************************************
 var refreshRate = 5000; // in milliseconds
 var numPrinters = 0;
@@ -64,14 +64,19 @@ window.onload = function () {
   	setInterval(function () {updatePrinters();}, refreshRate);
 };
 
+function initPrinters()
+{
+    printers ={
+        "ip": [],
+        "port": [],
+        "apikey": [],
+        "noConn": []
+    };
+}
+
 function reloadPrinters() {
 	if (localStorage.getItem("savedPrinters") === null) {
-      		printers ={
-          		"ip": [],
-          		"port": [],
-          		"apikey": [],
-          		"noConn": []
-  		};
+        initPrinters();
       	$("#noPrintersModal").modal("show");
   	} else {
       		delete client;
@@ -123,7 +128,7 @@ function basicInfo(ip, port, apikey, index) {
       		// get name of the printer
     		document.getElementById("printerName" +index).innerHTML =response.profiles._default.name;
       		// set the panel footer as the printer's ip
-    		document.getElementById("printerIP" +index).innerHTML = ip
+    		document.getElementById("printerIP" +index).innerHTML = ip;
   	});
 }
 
@@ -231,7 +236,7 @@ function addPrinter(ip, port, apikey, printerNum) {
 function eePrinterModal(index) {
 	if (index === null) {
     		// Use blank/default values for new printer
-    		index = numPrinters
+    		index = numPrinters;
     		$("#eeIP").val("");
     		$("#eePort").val("80");
     		$("#eeApikey").val("");
@@ -240,21 +245,21 @@ function eePrinterModal(index) {
       		// Keep the current printer values
   	} else {
       		// Pull in existing printer values
-    		printers = JSON.parse(localStorage.getItem("savedPrinters"))
-    		$("#eeIP").val(printers.ip[index])
-    		$("#eePort").val(printers.port[index])
-    		$("#eeApikey").val(printers.apikey[index])
+    		printers = JSON.parse(localStorage.getItem("savedPrinters"));
+    		$("#eeIP").val(printers.ip[index]);
+    		$("#eePort").val(printers.port[index]);
+    		$("#eeApikey").val(printers.apikey[index]);
   	}
-  	modalIndex = index
-  	$("#eePrinterModal").modal("show")
+  	modalIndex = index;
+  	$("#eePrinterModal").modal("show");
 }
 
 function eeFromModal() {
-  	var index = modalIndex
+  	var index = modalIndex;
   	var eeIP = $("#eeIP").val();
   	var eePort = $("#eePort").val();
   	var eeApikey = $("#eeApikey").val();
-  	if (eeIP === "" || eeApikey === "" || eePort == "") {
+  	if (eeIP === "" || eeApikey === "" || eePort === "") {
     		$("#missingInfoModal").modal("show");
   	} else {
    		testConnection(eeIP, eePort, eeApikey, index);
@@ -265,11 +270,7 @@ function deletePrinters() {
 	// remove the printers from localStorage
     	localStorage.removeItem("savedPrinters");
     	// remove the printers from the printers object
-    	printers ={
-        	"ip": [],
-        	"port": [],
-        	"apikey": []
-    	};
+    	initPrinters();
     	// reset the number of printers
     	delete client;
 	numPrinters = 0;
