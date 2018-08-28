@@ -175,7 +175,7 @@ function tempInfo(ip, port, apikey, index) {
                 if (printersSetings.tool[index] == 1){
                     document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " +response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°";
                 } else {
-                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: No tool"
+                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: No tool";
                 }
       		// get temp of the bed and its target temp
       		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
