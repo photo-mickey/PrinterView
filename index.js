@@ -34,12 +34,16 @@ const color = {
 	natural		: 0x15
 };
 //********************************************************************************
-var refreshRate = 5000; // in milliseconds
-var numPrinters = 0;
-var modalIndex  = 0;
-var printers    = new Object();
-var connected   = true;
-var client      = new Array();
+var refreshRate     = 5000; // in milliseconds
+var numPrinters     = 0;
+var modalIndex      = 0;
+var printers        = new Object();
+var connected       = true;
+var client          = new Array();
+//********************************************************************************
+var printersSetings = {
+    tool: []
+}; 
 //********************************************************************************
 
 // ToDo:
@@ -129,6 +133,9 @@ function basicInfo(ip, port, apikey, index) {
     		document.getElementById("printerName" +index).innerHTML =response.profiles._default.name;
       		// set the panel footer as the printer's ip
     		document.getElementById("printerIP" +index).innerHTML = ip;
+                // get number of tools
+                //printersSetings.tool[index] = response.profiles.extruder.count;
+                document.getElementById("e1Temp" +index).innerHTML = response.profiles.extruder.count;
   	});
 }
 
@@ -165,6 +172,8 @@ function tempInfo(ip, port, apikey, index) {
   	.done(function (response) {
       		// get temp of extruder 0 and its target temp
       		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
+                // get temp of extruder 1 and its target temp
+                
       		// get temp of the bed and its target temp
       		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
         		document.getElementById("bedTemp" +index).innerHTML = "Bed: " +response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°";
