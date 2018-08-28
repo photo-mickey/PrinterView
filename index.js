@@ -172,7 +172,7 @@ function tempInfo(ip, port, apikey, index) {
       		// get temp of extruder 0 and its target temp
       		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
                 // get temp of extruder 1 and its target temp
-                if (printersSetings.tool[index] == 1){
+                if (printersSetings.tool[index] == "1"){
                     document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " +response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°";
                 } else {
                     document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: No tool";
