@@ -237,6 +237,7 @@ function addPrinter(ip, port, apikey, printerNum) {
   	$("#dropdown" +printerNum).append(removeButton);
   	$("#dropdown" +printerNum).append(octoPrintPageButton);
   	$("#panel" +printerNum).append('<div class="panel-body" id="body' + printerNum +'"></div>');
+        $("#body" +printerNum).append('<canvas style="border:1px solid #000000; id="printerCam' + printerNum +'">Printer camera</canvas>');
 	$("#body" +printerNum).append('<p id="printerStatus' + printerNum +'">status</p>');
  	$("#body" +printerNum).append('<p id="e0Temp' + printerNum +'">0</p>');
         $("#body" +printerNum).append('<p id="e1Temp' + printerNum +'">0</p>');
