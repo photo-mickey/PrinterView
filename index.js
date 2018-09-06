@@ -110,7 +110,7 @@ function updateStatus(ip, port, apikey, camPort, index) {
       			makeBlank(index);
     		} else {
         		// get printer state
-        		document.getElementById("printerStatus" + index).innerHTML = "State: " + response.current.state;
+        		document.getElementById("printerStatus" + index).innerHTML = "State: " + "<span class='highlight'>" + response.current.state + "</span>";
         		if (response.current.state !== ("Closed" || "Offline")) {
         			document.getElementById("panel" + index).className = "panel panel-primary";
         			basicInfo(ip, port, apikey, index);
@@ -155,9 +155,9 @@ function jobInfo(ip, port, apikey, index) {
           		$("div#progressBar" +index).css("width", "0%");
       		} else {
           		// set filename of current print
-          		document.getElementById("currentFile" +index).innerHTML = "File: " +response.job.file.name.split(".").slice(0, -1).join(".");
+          		document.getElementById("currentFile" +index).innerHTML = "File: " + "<span class='highlight'>" +response.job.file.name.split(".").slice(0, -1).join(".") + "</span>" ;
           		// set estimation of print time left
-          		document.getElementById("timeLeft" +index).innerHTML = "Time left: " + (response.progress.printTimeLeft / 60).toFixed(2) + " minutes";
+          		document.getElementById("timeLeft" +index).innerHTML = "Time left: " + "<span class='highlight'>" + (response.progress.printTimeLeft / 60).toFixed(2) + "</span>" + " minutes";
           		// set percentage of print completion
           		$("div#progressBar" +index).css("width", response.progress.completion + "%");
     		}
@@ -173,16 +173,16 @@ function tempInfo(ip, port, apikey, index) {
   	client[index].get("/api/printer")
   	.done(function (response) {
       		// get temp of extruder 0 and its target temp
-      		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " +response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°";
+      		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " + "<span class='highlight'>" + response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°" + "</span>";
                 // get temp of extruder 1 and its target temp
                 if (typeof response.temperature.tool1 !== "undefined" && response.temperature.tool1.actual !== null) {
-                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " +response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°";
+                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " + "<span class='highlight'>" + response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°" + "</span>";
                 } else {
                     document.getElementById("e1Temp" +index).innerHTML ="Extruder 1: no tool";
                 }
       		// get temp of the bed and its target temp
       		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
-        		document.getElementById("bedTemp" +index).innerHTML = "Bed: " +response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°";
+        		document.getElementById("bedTemp" +index).innerHTML = "Bed: " + "<span class='highlight'>" + response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°" + "</span>";
       		} else {
         		document.getElementById("bedTemp" +index).innerHTML ="0°";
       		}
