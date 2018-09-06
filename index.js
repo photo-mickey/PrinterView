@@ -91,18 +91,19 @@ function reloadPrinters() {
           		client.push(new OctoPrintClient());
           		client[i].options.baseurl = "http://" +printers.ip[i] + ":" +printers.port[i];
           		client[i].options.apikey = printers.apikey[i];
-          		initialInfo(printers.ip[i], printers.port[i], printers.apikey[i], i);
+          		initialInfo(printers.ip[i], printers.port[i], printers.apikey[i], printers.camPort[i], i);
           		addPrinter(printers.ip[i], printers.port[i], printers.apikey[i], i);
+                        videoInfo(printers.ip[i], printers.camPort[i], i);
        		}
    	}
 }
 
-function initialInfo(ip, port, apikey, index) {
+function initialInfo(ip, port, apikey, camPort, index) {
 	basicInfo(ip, port, apikey, index);
-  	updateStatus(ip, port, apikey, index);
+  	updateStatus(ip, port, apikey, camPort, index);
 }
 
-function updateStatus(ip, port, apikey, index) {
+function updateStatus(ip, port, apikey, camPort, index) {
 	client[index].get("api/connection")
   	.done(function (response) {
     		if (response.current.state === null) {
@@ -115,6 +116,7 @@ function updateStatus(ip, port, apikey, index) {
         			basicInfo(ip, port, apikey, index);
           			jobInfo(ip, port, apikey, index);
           			tempInfo(ip, port, apikey, index);
+                                videoInfo(printers.ip[index], printers.camPort[index], index);
         		} else if (response.current.state === ("Closed" || "Offline")) {
             			//Do not make blank. It is annoying.
           			document.getElementById("panel" + index).className = "panel panel-default";
@@ -191,9 +193,57 @@ function tempInfo(ip, port, apikey, index) {
   	});
 }
 
+
+function scaleRect(srcSize, dstSize) {
+      var ratio = Math.min(dstSize.width / srcSize.width,
+                           dstSize.height / srcSize.height);
+      var newRect = {
+        x: 0, y: 0,
+        width: srcSize.width * ratio,
+        height: srcSize.height * ratio
+      };
+      newRect.x = (dstSize.width/2) - (newRect.width/2);
+      newRect.y = (dstSize.height/2) - (newRect.height/2);
+      return newRect;
+    }
+
+function videoInfo(ip, camPort, index) {
+    var url = "http://" + ip + ":" + camPort + "/?action=stream";
+    var img = new Image();
+    img.src = url;
+    var canvas  = document.getElementById("printerCam" + index);
+    var context = canvas.getContext("2d");
+    
+    img.onload = function() {
+        var srcRect = {
+            x: 0, 
+            y: 0,
+            width: img.naturalWidth,
+            height: img.naturalHeight
+        };
+        var dstRect = scaleRect(
+            srcRect, {
+                width: canvas.width,
+                height: canvas.height
+            }
+        );
+        context.drawImage(
+            img,
+            srcRect.x,
+            srcRect.y,
+            srcRect.width,
+            srcRect.height,
+            dstRect.x,
+            dstRect.y,
+            dstRect.width,
+            dstRect.height
+        );
+    };
+}
+
 function updatePrinters() {
 	for (var i = 0; i < numPrinters; i++) {
-      		updateStatus(printers.ip[i], printers.port[i], printers.apikey[i], i);
+      		updateStatus(printers.ip[i], printers.port[i], printers.apikey[i], printers.camPort[i], i);
     	}
 }
 
@@ -217,7 +267,7 @@ function eePrinter(ip, port, apikey, i, camPort, noConn) {
     	// save new printer to local storage
     	localStorage.setItem("savedPrinters", JSON.stringify(printers));
     	// get initial info on printer
-    	initialInfo(ip, port, apikey, i);
+    	initialInfo(ip, port, apikey, camPort, i);
 }
 
 
@@ -237,7 +287,7 @@ function addPrinter(ip, port, apikey, printerNum) {
   	$("#dropdown" +printerNum).append(removeButton);
   	$("#dropdown" +printerNum).append(octoPrintPageButton);
   	$("#panel" +printerNum).append('<div class="panel-body" id="body' + printerNum +'"></div>');
-        $("#body" +printerNum).append('<canvas style="border:1px solid #000000; id="printerCam' + printerNum +'">Printer camera</canvas>');
+        $("#body" +printerNum).append('<canvas id="printerCam' + printerNum +'" width="320" height="180">Brouswe error!</canvas>');
 	$("#body" +printerNum).append('<p id="printerStatus' + printerNum +'">status</p>');
  	$("#body" +printerNum).append('<p id="e0Temp' + printerNum +'">0</p>');
         $("#body" +printerNum).append('<p id="e1Temp' + printerNum +'">0</p>');
