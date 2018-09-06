@@ -34,12 +34,13 @@ const color = {
 	natural		: 0x15
 };
 //********************************************************************************
-var refreshRate     = 5000; // in milliseconds
+var refreshRate     = 3000; // in milliseconds
 var numPrinters     = 0;
 var modalIndex      = 0;
 var printers        = new Object();
 var connected       = true;
 var client          = new Array();
+var prevPanelWidth  = 0;
 //********************************************************************************
 var printersSetings = {
     tool: []
@@ -64,8 +65,15 @@ var printersSetings = {
 window.onload = function () {
 	// get saved printers
     	reloadPrinters();
+        panelWidthControl();
   	// update printer info
-  	setInterval(function () {updatePrinters();}, refreshRate);
+  	setInterval(
+            function () {
+                updatePrinters();
+                panelWidthControl();
+            }, 
+            refreshRate
+        );
 };
 
 function initPrinters()
@@ -78,6 +86,17 @@ function initPrinters()
         "camPort": []
     };
 }
+
+function panelWidthControl(){
+    var currentWidth = document.getElementById("panel"+1).offsetWidth;
+    if (prevPanelWidth != currentWidth)
+    {
+        prevPanelWidth = currentWidth;
+        for(var i = 0; i<numPrinters; i++){
+            resizeCanvas(0.5625, i);
+        }
+    }
+} 
 
 function reloadPrinters() {
 	if (localStorage.getItem("savedPrinters") === null) {
@@ -93,7 +112,7 @@ function reloadPrinters() {
           		client[i].options.apikey = printers.apikey[i];
           		initialInfo(printers.ip[i], printers.port[i], printers.apikey[i], printers.camPort[i], i);
           		addPrinter(printers.ip[i], printers.port[i], printers.apikey[i], i);
-                        videoInfo(printers.ip[i], printers.camPort[i], i);
+                        resizeCanvas(0.5625, i);
        		}
    	}
 }
@@ -207,7 +226,16 @@ function scaleRect(srcSize, dstSize) {
       return newRect;
     }
 
+function resizeCanvas(ratio, index)
+{
+    var canvasWidth = (document.getElementById("panel"+index).offsetWidth)/1.1;
+    var canvasHeight = canvasWidth * ratio;
+    document.getElementById("printerCam"+index).width = canvasWidth;
+    document.getElementById("printerCam"+index).height = canvasHeight;
+}
+
 function videoInfo(ip, camPort, index) {
+    //resizeCanvas(0.5625, index);
     var url = "http://" + ip + ":" + camPort + "/?action=stream";
     var img = new Image();
     img.src = url;
@@ -287,7 +315,7 @@ function addPrinter(ip, port, apikey, printerNum) {
   	$("#dropdown" +printerNum).append(removeButton);
   	$("#dropdown" +printerNum).append(octoPrintPageButton);
   	$("#panel" +printerNum).append('<div class="panel-body" id="body' + printerNum +'"></div>');
-        $("#body" +printerNum).append('<canvas id="printerCam' + printerNum +'" width="320" height="180">Brouswe error!</canvas>');
+        $("#body" +printerNum).append('<canvas id="printerCam' + printerNum +'" width = "320" height = "180" >Brouswe error!</canvas>');
 	$("#body" +printerNum).append('<p id="printerStatus' + printerNum +'">status</p>');
  	$("#body" +printerNum).append('<p id="e0Temp' + printerNum +'">0</p>');
         $("#body" +printerNum).append('<p id="e1Temp' + printerNum +'">0</p>');
