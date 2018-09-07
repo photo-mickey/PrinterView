@@ -1,14 +1,14 @@
 //********************************************************************************
 const printerState = {
-	ready 	: 1,
-	working	: 2,
-	error	: 3
+	free        : 1,
+	printing    : 2,
+	error       : 3
 };
 const plastic = {
-	ABS	: 1,
-	PLA	: 2,
-	Watson	: 3,
-	HIPS	: 4
+	ABS	: 0x01,
+	PLA	: 0x02,
+	Watson	: 0x03,
+	HIPS	: 0x04
 };
 const color = {
 	white		: 0x01,
@@ -42,8 +42,9 @@ var connected       = true;
 var client          = new Array();
 var prevPanelWidth  = 0;
 //********************************************************************************
-var printersSetings = {
-    tool: []
+var printersInfo = {
+    tool:  [],
+    state: []
 }; 
 //********************************************************************************
 
@@ -84,6 +85,10 @@ function initPrinters()
         "apikey": [],
         "noConn": [],
         "camPort": []
+    };
+    printersInfo ={
+        "tool":  [],
+        "state": []
     };
 }
 
@@ -131,7 +136,11 @@ function updateStatus(ip, port, apikey, camPort, index) {
         		// get printer state
         		document.getElementById("printerStatus" + index).innerHTML = "State: " + "<span class='highlight'>" + response.current.state + "</span>";
         		if (response.current.state !== ("Closed" || "Offline")) {
-        			document.getElementById("panel" + index).className = "panel panel-primary";
+                                if (printersInfo.state[index] === printerState.free){
+                                    document.getElementById("panel" + index).className = "panel panel-success";
+                                } else {
+                                    document.getElementById("panel" + index).className = "panel panel-primary";
+                                }
         			basicInfo(ip, port, apikey, index);
           			jobInfo(ip, port, apikey, index);
           			tempInfo(ip, port, apikey, index);
@@ -156,7 +165,7 @@ function basicInfo(ip, port, apikey, index) {
       		// set the panel footer as the printer's ip
     		document.getElementById("printerIP" +index).innerHTML = ip;
                 // get number of tools
-                printersSetings.tool[index] = response.profiles._default.extruder.count;
+                printersInfo.tool[index] = response.profiles._default.extruder.count;
   	});
 }
 
@@ -170,11 +179,14 @@ function jobInfo(ip, port, apikey, index) {
           		document.getElementById("currentFile" +index).innerHTML ="No file selected";
           		// set time left field to no active print
           		document.getElementById("timeLeft" +index).innerHTML ="No active print";
+                        printersInfo.state[index] = printerState.free;
           		// set print progress bar perecent to 0
           		$("div#progressBar" +index).css("width", "0%");
       		} else {
           		// set filename of current print
           		document.getElementById("currentFile" +index).innerHTML = "File: " + "<span class='highlight'>" +response.job.file.name.split(".").slice(0, -1).join(".") + "</span>" ;
+                        printersInfo.state[index] = printerState.printing;
+                        
           		// set estimation of print time left
           		document.getElementById("timeLeft" +index).innerHTML = "Time left: " + "<span class='highlight'>" + (response.progress.printTimeLeft / 60).toFixed(2) + "</span>" + " minutes";
           		// set percentage of print completion
@@ -403,6 +415,7 @@ function removePrinter(index) {
 function makeBlank(index) {
     	// make panel border color red
     	document.getElementById("panel" + index).className = "panel panel-danger";
+        printersInfo.state[index] = printerState.error;
     	// make the status fields blank
     	document.getElementById("printerStatus" +index).innerHTML ="";
     	document.getElementById("e0Temp" +index).innerHTML ="";
