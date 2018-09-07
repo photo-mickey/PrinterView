@@ -58,10 +58,10 @@ var printersInfo = {
 //	- Could be useful, but I think there may be other priorities
 // Objectify. Too much running amok
 // 
-// Dreamlist;
-// Webcams
+// Dreamlist:
+// Webcams - DONE!
 // Repetier-Server Integration
-// Access Control/Database storage
+// Access Control/Database storage - 
 
 window.onload = function () {
 	// get saved printers
