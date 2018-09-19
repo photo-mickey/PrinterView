@@ -71,7 +71,7 @@ window.onload = function () {
   	setInterval(
             function () {
                 updatePrinters();
-                panelWidthControl();
+                //panelWidthControl();
             }, 
             refreshRate
         );
@@ -240,7 +240,7 @@ function scaleRect(srcSize, dstSize) {
 
 function resizeCanvas(ratio, index)
 {
-    var canvasWidth = (document.getElementById("panel"+index).offsetWidth)/1.1;
+    var canvasWidth = (document.getElementById("panel"+index).offsetWidth)/1.2;
     var canvasHeight = canvasWidth * ratio;
     document.getElementById("printerCam"+index).width = canvasWidth;
     document.getElementById("printerCam"+index).height = canvasHeight;
@@ -316,8 +316,8 @@ function addPrinter(ip, port, apikey, printerNum) {
   	var removeButton        = '<li><button type="button" style="width: 100%" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter(' + printerNum +')">Remove Printer <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></li>';
   	var octoPrintPageButton = '<li><a type="button" style="width: 100%" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://' +printers.ip[printerNum] +'/" target="_blank">OctoPrint <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
   	// add HTML
-  	$("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer' + printerNum +'"></div>');
-  	$("#printer" +printerNum).append('<div class="panel panel-primary" id="panel' + printerNum +'"></div>');
+  	$("#printerGrid").append('<div class="col-xs-6 col-md-4" style="width: 230px" id="printer' + printerNum +'"></div>');
+  	$("#printer" +printerNum).append('<div class="panel panel-primary"  id="panel' + printerNum +'"></div>');
   	$("#panel" +printerNum).append('<div class="panel-heading clearfix" id="panelHeading' + printerNum +'"></div>');
   	$("#panelHeading" +printerNum).append('<h4 class="panel-title pull-left" style="padding-top: 7.5px;" id="printerName' + printerNum +'">Printer Name</h4></h4>');
   	$("#panelHeading" +printerNum).append('<div class="btn-group pull-right" id="btnGroup' + printerNum +'"></div>');
@@ -327,7 +327,7 @@ function addPrinter(ip, port, apikey, printerNum) {
   	$("#dropdown" +printerNum).append(removeButton);
   	$("#dropdown" +printerNum).append(octoPrintPageButton);
   	$("#panel" +printerNum).append('<div class="panel-body" id="body' + printerNum +'"></div>');
-        $("#body" +printerNum).append('<canvas id="printerCam' + printerNum +'" width = "320" height = "180" >Brouswe error!</canvas>');
+        $("#body" +printerNum).append('<canvas id="printerCam' + printerNum +'">Brouswe error!</canvas>');
 	$("#body" +printerNum).append('<p id="printerStatus' + printerNum +'">status</p>');
  	$("#body" +printerNum).append('<p id="e0Temp' + printerNum +'">0</p>');
         $("#body" +printerNum).append('<p id="e1Temp' + printerNum +'">0</p>');
