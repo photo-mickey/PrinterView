@@ -185,10 +185,13 @@ function jobInfo(ip, port, apikey, index) {
       		} else {
           		// set filename of current print
           		document.getElementById("currentFile" +index).innerHTML = "File: " + "<span class='highlight'>" +response.job.file.name.split(".").slice(0, -1).join(".") + "</span>" ;
-                        printersInfo.state[index] = printerState.printing;
-                        
           		// set estimation of print time left
           		document.getElementById("timeLeft" +index).innerHTML = "Time left: " + "<span class='highlight'>" + (response.progress.printTimeLeft / 60).toFixed(2) + "</span>" + " minutes";
+                        if (response.progress.printTimeLeft === 0){
+                            printersInfo.state[index] = printerState.free;
+                        } else {
+                            printersInfo.state[index] = printerState.printing;
+                        }
           		// set percentage of print completion
           		$("div#progressBar" +index).css("width", response.progress.completion + "%");
     		}
