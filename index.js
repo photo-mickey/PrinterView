@@ -34,6 +34,8 @@ const color = {
 	natural		: 0x15
 };
 //********************************************************************************
+const tempDelta = 1;
+//********************************************************************************
 var refreshRate     = 3000; // in milliseconds
 var numPrinters     = 0;
 var modalIndex      = 0;
@@ -203,27 +205,36 @@ function jobInfo(ip, port, apikey, index) {
 }
 
 function tempInfo(ip, port, apikey, index) {
-	// get info on temps
-  	client[index].get("/api/printer")
-  	.done(function (response) {
-      		// get temp of extruder 0 and its target temp
-      		document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " + "<span class='highlight'>" + response.temperature.tool0.actual + "°/" +response.temperature.tool0.target +"°" + "</span>";
-                // get temp of extruder 1 and its target temp
-                if (typeof response.temperature.tool1 !== "undefined" && response.temperature.tool1.actual !== null) {
-                    document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " + "<span class='highlight'>" + response.temperature.tool1.actual + "°/" +response.temperature.tool1.target +"°" + "</span>";
-                } else {
-                    document.getElementById("e1Temp" +index).innerHTML ="Extruder 1: no tool";
-                }
-      		// get temp of the bed and its target temp
-      		if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
-        		document.getElementById("bedTemp" +index).innerHTML = "Bed: " + "<span class='highlight'>" + response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°" + "</span>";
-      		} else {
-        		document.getElementById("bedTemp" +index).innerHTML ="0°";
-      		}
+    strColor = 'color:red';
+    // get info on temps
+    client[index].get("/api/printer")
+        .done(function (response) {
+            // get temp of extruder 0 and its target temp
+    
+            if ((response.temperature.tool0.target === 0)&&(response.temperature.tool0.actual === 0)){
+                strColor = 'color:green';    
+            } else if (((response.temperature.tool0.actual + tempDelta) > response.temperature.tool0.target)&&((response.temperature.tool0.actual - tempDelta) < response.temperature.tool0.target)){
+                strColor = 'color:green';
+            } else {
+                strColor = 'color:yellow';
+            }
+            document.getElementById("e0Temp" +index).innerHTML = "Extruder 0: " + "<span class='highlight'>" + response.temperature.tool0.actual + "°/" + response.temperature.tool0.target +"°" + "</span>";
+            // get temp of extruder 1 and its target temp
+            if (typeof response.temperature.tool1 !== "undefined" && response.temperature.tool1.actual !== null) {
+                document.getElementById("e1Temp" +index).innerHTML = "Extruder 1: " + "<span class='highlight'>" + response.temperature.tool1.actual + "°/" + response.temperature.tool1.target +"°" + "</span>";
+            } else {
+                document.getElementById("e1Temp" +index).innerHTML ="Extruder 1: no tool";
+            }
+            // get temp of the bed and its target temp
+            if (typeof response.temperature.bed !== "undefined" && response.temperature.bed.actual !== null) {
+                document.getElementById("bedTemp" +index).innerHTML = "Bed: " + "<span class='highlight'>" + response.temperature.bed.actual + "°/" +response.temperature.bed.target +"°" + "</span>";
+            } else {
+                document.getElementById("bedTemp" +index).innerHTML ="0°";
+            }
   	})
   	.fail(function () {
-    		document.getElementById("panel" +index).className = "panel panel-danger";
-    		makeBlank(index);
+            document.getElementById("panel" +index).className = "panel panel-danger";
+            makeBlank(index);
   	});
 }
 
