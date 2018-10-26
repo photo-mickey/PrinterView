@@ -73,7 +73,6 @@ window.onload = function () {
   	setInterval(
             function () {
                 updatePrinters();
-                //panelWidthControl();
             }, 
             refreshRate
         );
@@ -260,13 +259,58 @@ function resizeCanvas(ratio, index)
     document.getElementById("printerCam"+index).height = canvasHeight;
 }
 
+function videoSizeUp(ip, camPort, index){
+    
+    $("#videoModalCenter").modal("show");
+    document.getElementById("videoModalLongTitle").innerHTML = document.getElementById("printerName" + index).innerHTML;
+    var canvas  = document.getElementById("modalCanvas");
+    document.getElementById("modalCanvas").width  = 750;
+    document.getElementById("modalCanvas").height = 570;
+    var context = canvas.getContext("2d");
+    
+    var url = "http://" + ip + ":" + camPort + "/?action=stream";
+    var img = new Image();
+    img.src = url;
+    
+    img.onload = function() {
+        var srcRect = {
+            x: 0, 
+            y: 0,
+            width: img.naturalWidth,
+            height: img.naturalHeight
+        };
+        var dstRect = scaleRect(
+            srcRect, {
+                width: canvas.width,
+                height: canvas.height
+            }
+        );
+
+        context.drawImage(
+            img,
+            srcRect.x,
+            srcRect.y,
+            srcRect.width,
+            srcRect.height,
+            dstRect.x,
+            dstRect.y,
+            dstRect.width,
+            dstRect.height
+        );
+    };
+}
+
 function videoInfo(ip, camPort, index) {
-    //resizeCanvas(0.5625, index);
     var url = "http://" + ip + ":" + camPort + "/?action=stream";
     var img = new Image();
     img.src = url;
     var canvas  = document.getElementById("printerCam" + index);
     var context = canvas.getContext("2d");
+    
+    
+    canvas.onclick = function(){
+        videoSizeUp(ip, camPort, index);
+    };
     
     img.onload = function() {
         var srcRect = {
